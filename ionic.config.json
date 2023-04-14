@@ -1,0 +1,7 @@
+{
+  "name": "reqRes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
