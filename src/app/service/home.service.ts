@@ -7,32 +7,27 @@ import { User } from '../models/User.model';
 })
 export class ClientesService {
 
-  url = 'http://localhost:3000/clientes';
+  url = 'https://reqres.in/api/users/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  create(cliente: User){
+  create(cliente: User) {
     return this.http.post(this.url, cliente)
   }
 
-  getAll(){
+  getAll() {
     return this.http.get(this.url);
   }
 
-  getOne(id: number){
-    //this.http.get(this.url + '/' + id);
+  getOne(id: number) {
     return this.http.get(`${this.url}/${id}`);
   }
 
-  update(cliente: User){
-    return this.http.put(`${this.url}/${cliente.id}`,cliente);
+  update(user: User) {
+    return this.http.put(`${this.url}/${user.id}`, user);
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
-
-  login(){}
-
-  logout(){}
 }
