@@ -1,23 +1,30 @@
-import { ClientesService } from '../service/home.service';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { User } from './../models/user.model';
+import { Api } from './../models/api.model';
+import { ReqresService } from '../services/reqres.service';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink],
+  imports: [IonicModule, CommonModule, RouterLink],
 })
-export class HomePage {
-  constructor(private clientesService: ClientesService) {
-    this.buscarClientes();
+export class HomePage implements OnInit{
+  retornoApi: User[] = [];
+
+  constructor(private reqres: ReqresService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.getAllUsers();
   }
 
-  buscarClientes() {
-    this.clientesService.getAll().subscribe(dados => {
-      console.log(dados);
-    });
+  getAllUsers() {
+    this.reqres.getAll().subscribe(dados => {
+      this.retornoApi = dados.data;
+    })
   }
 }
