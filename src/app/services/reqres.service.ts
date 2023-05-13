@@ -1,3 +1,5 @@
+import { UserUpdate } from './../models/userUpdate.model';
+import { UserCreate } from './../models/userCreate.model';
 import { User } from './../models/user.model';
 import { Api } from './../models/api.model';
 import { HttpClient } from '@angular/common/http';
@@ -16,23 +18,29 @@ export class ReqresService {
     return this.http.get<Api>(this.url);
   }
 
-  create(user: User) {
-    return this.http.post(this.url, user);
+  create(user: UserCreate): Observable<UserCreate> {
+    return this.http.post<UserCreate>(this.url, user).pipe(
+      map((retorno) => retorno),
+      catchError((erro) => this.exibirErro(erro))
+    );
   }
 
-  getOne(id: number) {
+  getOne(id: number): Observable<User> {
     return this.http.get<Api>(`${this.url}/${id}`).pipe(
       map((retorno) => retorno.data),
       catchError((erro) => this.exibirErro(erro))
     );
   }
 
-  update(user: User, id: number) {
-    return this.http.put(`${this.url}/${id}`, user);
+  update(user: UserUpdate, id: number): Observable<UserUpdate> {
+    return this.http.put<UserUpdate>(`${this.url}/${id}`, user).pipe(
+      map((retorno) => retorno),
+      catchError((erro) => this.exibirErro(erro))
+    );
   }
 
-  delete(id: number) {
-    return this.http.delete(`${this.http}/${id}`);
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/${id}`);
   }
 
   exibirErro(erro: any): Observable<any> {
